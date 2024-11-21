@@ -1,6 +1,7 @@
 package com.jpaksuniemi;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,8 +53,10 @@ public class ReserverController {
     }
 
     @DeleteMapping("/reservers/{id}")
-    void deleteReserver(@PathVariable long id) {
+    Reserver deleteReserver(@PathVariable long id) {
+        Reserver returnValue = repository.findById(id).orElseThrow();
         repository.deleteById(id);
+        return returnValue;
     }
 
 }
