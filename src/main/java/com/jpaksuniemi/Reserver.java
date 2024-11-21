@@ -1,23 +1,23 @@
 package com.jpaksuniemi;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Reserver {
+    private static final AtomicInteger counter = new AtomicInteger();
 
     @Id
-    @SequenceGenerator(name = "reserver_seq_gen", sequenceName = "RESERVER_SEQ", allocationSize = 1)
-    @GeneratedValue 
-    private Long id;
+    private int id;
     private String name;
     private String email;
 
     public Reserver() {}
 
     public Reserver(String name, String email) {
+        id = counter.incrementAndGet();
         this.name = name;
         this.email = email;
     }
