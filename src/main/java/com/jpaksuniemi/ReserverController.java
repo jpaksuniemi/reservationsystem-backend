@@ -2,15 +2,19 @@ package com.jpaksuniemi;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
+@RequestMapping("/api")
 public class ReserverController {
 
     private final ReserverRepository repository;
@@ -19,23 +23,23 @@ public class ReserverController {
         this.repository = repository;
     }
 
-    @GetMapping("/reserver")
+    @GetMapping("/reservers/")
     List<Reserver> all() {
         return repository.findAll();
     }
 
-    @PostMapping("/reserver")
+    @PostMapping("/reservers/")
     Reserver newReserver(@RequestBody Reserver newReserver) {
         return repository.save(newReserver);
     }
 
-    @GetMapping("/reserver/{id}")
-    Reserver one(@PathVariable Long id) {
+    @GetMapping("/reservers/{id}")
+    Reserver one(@PathVariable long id) {
         return repository.findById(id).orElseThrow();
     }
 
-    @PutMapping("/reserver/{id}")
-    Reserver replaceReserver(@RequestBody Reserver newReserver, @PathVariable Long id) {
+    @PutMapping("/reservers/{id}")
+    Reserver replaceReserver(@RequestBody Reserver newReserver, @PathVariable long id) {
         return repository.findById(id)
             .map(reserver -> {
                 reserver.setName(newReserver.getName());
@@ -47,8 +51,8 @@ public class ReserverController {
             });
     }
 
-    @DeleteMapping("/reserver/{id}")
-    void deleteReserver(@PathVariable Long id) {
+    @DeleteMapping("/reservers/{id}")
+    void deleteReserver(@PathVariable long id) {
         repository.deleteById(id);
     }
 
